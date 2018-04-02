@@ -1,0 +1,64 @@
+.form{
+    width:500px;
+    height:600px;
+    top:50%;
+    left:50%;
+    margin: auto;
+    background-color: gray;
+}
+
+label, input {
+    display: block;
+}
+
+label {
+    margin-bottom: auto;
+    text-align: center;
+}
+
+input{
+   max-width: 400px;
+    text-align:left;
+    margin:auto;
+    height:20px;
+    text-align: center;
+    width:50%;
+}
+
+.form,h2{
+    margin:auto;
+    text-align:center;
+    
+}
+
+
+.button{
+    background-color: orange;
+    width:34%;
+    height:45%
+}
+
+.form .fa-user, .fa-map-marker,
+.fa-envelope,
+.fa-lock{
+    position: relative;
+    top:21px;
+    right:100px;
+    font-size:15px;
+}
+
+.line{
+    max-width: 34%;
+}
+
+input:invalid {
+    border: 1px solid  red;
+  }
+  
+input:valid {
+border: 1px solid green;
+}
+
+.error{
+    background-color: red;
+}
