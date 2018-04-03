@@ -27,6 +27,7 @@ export default class Signup extends React.Component{
 
         handleSubmit(event) {
             event.preventDefault();
+            alert("Form Submitted Successfully !")
         }
 
     
@@ -45,12 +46,12 @@ export default class Signup extends React.Component{
                 let confirmPasswordValid = this.state.confirmPasswordValid;
                 switch(fieldName) {
                   case 'email':
-                    emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                    emailValid = value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i);
                     fieldValidationErrors.email = emailValid ? '' : ' is invalid';
                     break;
 
                     case 'username':
-                    usernameValid = value.match(/^([a-zA-Z0-9]{5,15})$/i);
+                    usernameValid = value.match(/^([a-zA-Z0-9]{3,15})$/i);
                     fieldValidationErrors.username = usernameValid ? '': 'is invalid';
                     break; 
 
@@ -60,8 +61,13 @@ export default class Signup extends React.Component{
                     break;
 
                     case 'confirmPassword':
-                    confirmPasswordValid = value.length >=6;
-                    fieldValidationErrors.confirmPassword = confirmPasswordValid ? '' : 'mismatch'
+                    if(this.state.confirmPassword===this.state.password){
+                        fieldValidationErrors.confirmPassword = '';
+                    }
+                    else{
+                        fieldValidationErrors.confirmPassword = 'Mismatch';
+                    }
+                    break;
                     default:
                     break;
                 }
@@ -82,32 +88,41 @@ export default class Signup extends React.Component{
         return(
             <div className = "form">
                 <h2>Register</h2>
-                <p>Join the community and improve your game <br/>with ANGLR</p>
+                <h5>Join the community and improve your game <br/>with ANGLR</h5>
                 <form onSubmit = {this.handleSubmit}>
 
 
-                <label><span className="fa fa-user"></span><input type = "text" name = "firstname"  placeholder = "First Name" 
+                <label><span className="fa fa-user"></span><input type = "text" name = "firstname" pattern="[A-Za-z]{3,15}" placeholder = "First Name" 
                 value = {this.state.firstname} onChange = {(event) => this.handleUserInput(event)} /> </label>
 
-                <label><span className="fa fa-user"></span><input type = "text" name = "lastname" placeholder = "Last Name"    
+                <label><span className="fa fa-user"></span><input type = "text" name = "lastname" pattern="[A-Za-z]{3,15}" placeholder = "Last Name"    
                 value = {this.state.lastname} onChange = {(event) => this.handleUserInput(event)} /> </label>
 
-                <label><span className="fa fa-map-marker"></span><input type = "text" name = "zipcode" placeholder = "Zip Code" 
-                value = {this.state.zipcode} onChange = {(event) => this.handleUserInput(event)} /> </label>
+                <label><span className="fa fa-map-marker"></span>
+                <input type = "text" name = "zipcode" pattern="[0-9]{6}" placeholder = "Zip Code" 
+                value = {this.state.zipcode} onChange = {(event) => this.handleUserInput(event)} /> 
+                </label>
 
-                <label><span className="fa fa-envelope"></span><input type = "email" name = "email" placeholder = "Email ID" 
-                value = {this.state.email} onChange = {(event) => this.handleUserInput(event)} required /> </label>
+                <label><span className="fa fa-envelope"></span>
+                <input type = "email" name = "email" placeholder = "Email ID" 
+                value = {this.state.email} onChange = {(event) => this.handleUserInput(event)}  />
+                {(this.state.email.length > 0 && !this.state.emailValid)?<i className="fa fa-warning warningstyles"></i>:''}
+                 </label>
 
-                <label><span className="fa fa-user"></span><input type = "text" name = "username" placeholder = "User Name" 
-                value = {this.state.username} onChange = {(event) => this.handleUserInput(event)} required /> </label>
+                <label><span className="fa fa-user"></span>
+                <input type = "text" name = "username" placeholder = "User Name" 
+                value = {this.state.username} onChange = {(event) => this.handleUserInput(event)} />
+                {(this.state.username.length > 0 && !this.state.usernameValid)?<i className="fa fa-warning warningstyles"></i>:''} </label>
 
                 <label><span className="fa fa-lock"></span><input type = "password" name = "password" placeholder = "Password" 
-                value = {this.state.password} onChange = {(event) => this.handleUserInput(event)} required /> </label>
+                value = {this.state.password} onChange = {(event) => this.handleUserInput(event)} />
+                {(this.state.password.length > 0 && !this.state.passwordValid)?<i className="fa fa-warning warningstyles"></i>:''} </label>
 
                 <label><span className="fa fa-lock"></span><input type = "password" name = "confirmPassword" placeholder = "Confirm Password" 
-                value = {this.state.confirmPassword} onChange = {(event) => this.handleUserInput(event)} required /> </label>
+                value = {this.state.confirmPassword} onChange = {(event) => this.handleUserInput(event)}/>
+                {(this.state.confirmPassword.length > 0 && !this.state.confirmPasswordValid)?<i className="fa fa-warning warningstyles"></i>:''} </label>
 
-                <p>By registering you agree to <br/> our Terms and Privacy Policy</p>
+                <h5>By registering you agree to <br/> our Terms and Privacy Policy</h5>
 
                     <div className="error">
                     <FormErrors formErrors={this.state.formErrors} />
@@ -117,7 +132,7 @@ export default class Signup extends React.Component{
 
                 <hr className="line"/>
 
-                <p>Already have an account? <strong>SIGN IN</strong></p>
+                <h5>Already have an account? <strong>SIGN IN</strong></h5>
             
 
                 </form>
